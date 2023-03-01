@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 /**
  * This is a demo program showing the use of the DifferentialDrive class. Runs the motors with
@@ -12,15 +15,32 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */                                                                            
 public class Robot extends TimedRobot {
 
-  Constants cons = new Constants();
-  Gear gear = new Gear();
+  // Motors 
+  public final PWMSparkMax leftMotor = new PWMSparkMax(0);
+  public final PWMSparkMax rightMotor = new PWMSparkMax(1);
+
+  // Drivetrain
+  public final DifferentialDrive robotDrive = new DifferentialDrive(leftMotor, rightMotor);
+
+  //Controller Constants
+  public final XboxController xbox = new XboxController(2);
+
+  final Constants cons = new Constants();
+  final Gear gear = new Gear();
 
   @Override
   public void robotInit() {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    cons.rightMotor.setInverted(true);
+    rightMotor.setInverted(true);
+  }
+
+
+  @Override
+  public void teleopInit()
+  {
+
   }
 
   @Override
@@ -29,14 +49,14 @@ public class Robot extends TimedRobot {
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     double speedMultiplier = gear.getSpeedMultiplier();
-    cons.robotDrive.arcadeDrive(cons.xbox.getLeftY() * speedMultiplier, -cons.xbox.getLeftX() * speedMultiplier);
+    robotDrive.arcadeDrive(xbox.getLeftY() * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
 
-    if (cons.xbox.getBButtonPressed() == true) {
+    if (xbox.getBButtonPressed() == true) {
       // Gear Shift Logic
-      if (speedMultiplier > 0.5) {
-        gear.setSpeedMultiplier(cons.maxMultiplier);
-      } else {
+      if (speedMultiplier > 0.7) {
         gear.setSpeedMultiplier(cons.minMultiplier);
+      } else {
+        gear.setSpeedMultiplier(cons.maxMultiplier);
       }
     }
 
