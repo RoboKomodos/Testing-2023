@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
 
   final Constants cons = new Constants();
   final Gear gear = new Gear();
+  final SpeedCurve sc = new SpeedCurve();
 
   @Override
   public void robotInit() {
@@ -49,7 +50,16 @@ public class Robot extends TimedRobot {
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     double speedMultiplier = gear.getSpeedMultiplier();
-    robotDrive.arcadeDrive(xbox.getLeftY() * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
+    double speedCurve = sc.getSpeedMultiplier();
+
+
+    if (sc.useLastJoy(xbox.getLeftY()) == true) {
+      robotDrive.arcadeDrive(speedCurve * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
+    } else {
+      robotDrive.arcadeDrive(xbox.getLeftY() * speedMultiplier, -xbox.getLeftX() * speedMultiplier * speedCurve);
+    }
+
+    sc.updateSpeedCurve(xbox.getLeftY());
 
     if (xbox.getBButtonPressed() == true) {
       // Gear Shift Logic
