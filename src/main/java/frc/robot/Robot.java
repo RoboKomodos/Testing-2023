@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
 
   final Constants cons = new Constants();
   final Gear gear = new Gear();
+  final Claw claw = new Claw();
 
   @Override
   public void robotInit() {
@@ -51,6 +52,7 @@ public class Robot extends TimedRobot {
     double speedMultiplier = gear.getSpeedMultiplier();
     robotDrive.arcadeDrive(xbox.getLeftY() * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
 
+    // Gear Shift Controls
     if (xbox.getBButtonPressed() == true) {
       // Gear Shift Logic
       if (speedMultiplier > 0.7) {
@@ -60,6 +62,18 @@ public class Robot extends TimedRobot {
       }
     }
 
+    // Claw Controls
+    if (xbox.getRightBumperPressed() == true) {
+      cons.clawMotor.set(cons.clawOpenSpeed);
+      claw.setClawState(false);
+    } else if (xbox.getLeftBumperPressed() == true) {
+      cons.clawMotor.set(cons.clawCloseSpeed);
+      claw.setClawState(true);
+    } else {
+      cons.clawMotor.set(claw.getIdleSpeed());
+    }
+
+    // Arm Controls
     if (xbox.getPOV() == 0) {
       cons.leftArmMotor.set(cons.armUpSpeed);
       cons.rightArmMotor.set(cons.armUpSpeed);

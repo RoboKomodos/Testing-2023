@@ -11,9 +11,9 @@ public class Constants {
   // Arm/Claw Speed
   public final double armUpSpeed = 0.3;
   public final double armDownSpeed = -0.1;
-  
-  public final double clawOpenSpeed = 0.2;
-  public final double clawCloseSpeed = -0.2;
+
+  public final double clawOpenSpeed = 0.5;
+  public final double clawCloseSpeed = -0.5;
 
   // Arm Motors
   public final PWMSparkMax leftArmMotor = new PWMSparkMax(3);
