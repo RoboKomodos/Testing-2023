@@ -60,5 +60,16 @@ public class Robot extends TimedRobot {
       }
     }
 
+    if (xbox.getPOV() == 0) {
+      cons.leftArmMotor.set(cons.armUpSpeed);
+      cons.rightArmMotor.set(cons.armUpSpeed);
+    } else if (xbox.getPOV() == 180) {
+      cons.leftArmMotor.set(cons.armDownSpeed);
+      cons.rightArmMotor.set(cons.armDownSpeed);
+    } else {
+      cons.leftArmMotor.set(0);
+      cons.rightArmMotor.set(0);
+    }
+
   }
 }
