@@ -19,11 +19,18 @@ public class Robot extends TimedRobot {
   public final PWMSparkMax leftMotor = new PWMSparkMax(0);
   public final PWMSparkMax rightMotor = new PWMSparkMax(1);
 
+  // Arm Motors
+  public final PWMSparkMax leftArmMotor = new PWMSparkMax(3);
+  public final PWMSparkMax rightArmMotor = new PWMSparkMax(4);
+
+  // Claw Motors
+  public final PWMSparkMax clawMotor = new PWMSparkMax(6);
+
   // Drivetrain
   public final DifferentialDrive robotDrive = new DifferentialDrive(leftMotor, rightMotor);
 
   //Controller Constants
-  public final XboxController xbox = new XboxController(2);
+  public final XboxController xbox = new XboxController(0);
 
   final Constants cons = new Constants();
   final Gear gear = new Gear();
@@ -64,25 +71,25 @@ public class Robot extends TimedRobot {
 
     // Claw Controls
     if (xbox.getRightBumperPressed() == true) {
-      cons.clawMotor.set(cons.clawOpenSpeed);
+      clawMotor.set(cons.clawOpenSpeed);
       claw.setClawState(false);
     } else if (xbox.getLeftBumperPressed() == true) {
-      cons.clawMotor.set(cons.clawCloseSpeed);
+      clawMotor.set(cons.clawCloseSpeed);
       claw.setClawState(true);
     } else {
-      cons.clawMotor.set(claw.getIdleSpeed());
+      clawMotor.set(claw.getIdleSpeed());
     }
 
     // Arm Controls
     if (xbox.getPOV() == 0) {
-      cons.leftArmMotor.set(cons.armUpSpeed);
-      cons.rightArmMotor.set(cons.armUpSpeed);
+      leftArmMotor.set(cons.armUpSpeed);
+      rightArmMotor.set(cons.armUpSpeed);
     } else if (xbox.getPOV() == 180) {
-      cons.leftArmMotor.set(cons.armDownSpeed);
-      cons.rightArmMotor.set(cons.armDownSpeed);
+      leftArmMotor.set(cons.armDownSpeed);
+      rightArmMotor.set(cons.armDownSpeed);
     } else {
-      cons.leftArmMotor.set(0);
-      cons.rightArmMotor.set(0);
+      leftArmMotor.set(0);
+      rightArmMotor.set(0);
     }
 
   }

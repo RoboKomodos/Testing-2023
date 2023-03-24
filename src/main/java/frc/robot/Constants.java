@@ -9,17 +9,10 @@ public class Constants {
   public final double maxMultiplier = 1;//0.85;
 
   // Arm/Claw Speed
-  public final double armUpSpeed = 0.3;
-  public final double armDownSpeed = -0.1;
+  public final double armUpSpeed = -0.6;
+  public final double armDownSpeed = 0.1;
 
   public final double clawOpenSpeed = 0.5;
   public final double clawCloseSpeed = -0.5;
-
-  // Arm Motors
-  public final PWMSparkMax leftArmMotor = new PWMSparkMax(3);
-  public final PWMSparkMax rightArmMotor = new PWMSparkMax(4);
-
-  // Claw Motors
-  public final PWMSparkMax clawMotor = new PWMSparkMax(6);
     
 }
