@@ -2,7 +2,7 @@ package frc.robot;
 
 public class Claw {
     
-    private double inactiveSpeed = 0;
+    private double inactiveSpeed = -0.1;
     private double activeSpeed = 0.1;
     private boolean active = false;
 

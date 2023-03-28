@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
   public final PWMSparkMax rightArmMotor = new PWMSparkMax(4);
 
   // Claw Motors
-  public final PWMSparkMax clawMotor = new PWMSparkMax(6);
+  public final PWMSparkMax clawMotor = new PWMSparkMax(2);
 
   // Drivetrain
   public final DifferentialDrive robotDrive = new DifferentialDrive(leftMotor, rightMotor);
@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     double speedMultiplier = gear.getSpeedMultiplier();
-    robotDrive.arcadeDrive(xbox.getLeftY() * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
+    robotDrive.arcadeDrive((xbox.getLeftY() * -1) * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
 
     // Gear Shift Controls
     if (xbox.getBButtonPressed() == true) {
@@ -70,27 +70,36 @@ public class Robot extends TimedRobot {
     }
 
     // Claw Controls
-    if (xbox.getRightBumperPressed() == true) {
+    if (xbox.getRightBumper() == true) {
       clawMotor.set(cons.clawOpenSpeed);
-      claw.setClawState(false);
+      claw.setClawState(true);
     } else if (xbox.getLeftBumperPressed() == true) {
       clawMotor.set(cons.clawCloseSpeed);
-      claw.setClawState(true);
+      claw.setClawState(false);
     } else {
       clawMotor.set(claw.getIdleSpeed());
     }
 
-    // Arm Controls
-    if (xbox.getPOV() == 0) {
-      leftArmMotor.set(cons.armUpSpeed);
-      rightArmMotor.set(cons.armUpSpeed);
-    } else if (xbox.getPOV() == 180) {
-      leftArmMotor.set(cons.armDownSpeed);
-      rightArmMotor.set(cons.armDownSpeed);
+    if (xbox.getRightY() > 0) {
+      leftArmMotor.set(xbox.getRightY() * 0.3);
+      rightArmMotor.set(xbox.getRightY() * 0.3);
     } else {
-      leftArmMotor.set(0);
-      rightArmMotor.set(0);
+      leftArmMotor.set(xbox.getRightY() * 0.8);
+      rightArmMotor.set(xbox.getRightY() * 0.8);
     }
+
+    // // Arm Controls
+    // if (xbox.getPOV() == 0) {
+    //   leftArmMotor.set(cons.armUpSpeed);
+    //   rightArmMotor.set(cons.armUpSpeed);
+    // } else if (xbox.getPOV() == 180) {
+    //   leftArmMotor.set(cons.armDownSpeed);
+    //   rightArmMotor.set(cons.armDownSpeed);
+    // } else {
+    //   leftArmMotor.set(0);
+    //   rightArmMotor.set(0);
+    // }
+
 
   }
 }
