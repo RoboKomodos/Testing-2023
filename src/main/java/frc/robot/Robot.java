@@ -57,11 +57,10 @@ public class Robot extends TimedRobot {
     // That means that the Y axis drives forward
     // and backward, and the X turns left and right.
     double speedMultiplier = gear.getSpeedMultiplier();
-    robotDrive.arcadeDrive((xbox.getLeftY() * -1) * speedMultiplier, -xbox.getLeftX() * speedMultiplier);
+    robotDrive.tankDrive(-xbox.getLeftY() * speedMultiplier, -xbox.getRightY() * speedMultiplier);
 
     // Gear Shift Controls
     if (xbox.getBButtonPressed() == true) {
-      // Gear Shift Logic
       if (speedMultiplier > 0.7) {
         gear.setSpeedMultiplier(cons.minMultiplier);
       } else {
@@ -80,26 +79,25 @@ public class Robot extends TimedRobot {
       clawMotor.set(claw.getIdleSpeed());
     }
 
-    if (xbox.getRightY() > 0) {
-      leftArmMotor.set(xbox.getRightY() * 0.3);
-      rightArmMotor.set(xbox.getRightY() * 0.3);
-    } else {
-      leftArmMotor.set(xbox.getRightY() * 0.8);
-      rightArmMotor.set(xbox.getRightY() * 0.8);
-    }
-
-    // // Arm Controls
-    // if (xbox.getPOV() == 0) {
-    //   leftArmMotor.set(cons.armUpSpeed);
-    //   rightArmMotor.set(cons.armUpSpeed);
-    // } else if (xbox.getPOV() == 180) {
-    //   leftArmMotor.set(cons.armDownSpeed);
-    //   rightArmMotor.set(cons.armDownSpeed);
+    // if (xbox.getRightY() > 0) {
+    //   leftArmMotor.set(xbox.getRightY() * 0.3);
+    //   rightArmMotor.set(xbox.getRightY() * 0.3);
     // } else {
-    //   leftArmMotor.set(0);
-    //   rightArmMotor.set(0);
+    //   leftArmMotor.set(xbox.getRightY() * 0.8);
+    //   rightArmMotor.set(xbox.getRightY() * 0.8);
     // }
 
+    // Arm Controls
+    if (xbox.getPOV() == 0) {
+      leftArmMotor.set(cons.armUpSpeed);
+      rightArmMotor.set(cons.armUpSpeed);
+    } else if (xbox.getPOV() == 180) {
+      leftArmMotor.set(cons.armDownSpeed);
+      rightArmMotor.set(cons.armDownSpeed);
+    } else {
+      leftArmMotor.set(0);
+      rightArmMotor.set(0);
+    }
 
   }
 }

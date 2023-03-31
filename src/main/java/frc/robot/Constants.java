@@ -6,7 +6,7 @@ public class Constants {
 
   // Speed Multiplier Variables
   public final double minMultiplier = 0.6;
-  public final double maxMultiplier = 0.9;//0.85;
+  public final double maxMultiplier = 0.9;
 
   // Arm/Claw Speed
   public final double armUpSpeed = -0.6;
