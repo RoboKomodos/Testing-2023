@@ -4,10 +4,15 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.simulation.DriverStationDataJNI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This is a demo program showing the use of the DifferentialDrive class. Runs the motors with
@@ -32,9 +37,16 @@ public class Robot extends TimedRobot {
   //Controller Constants
   public final XboxController xbox = new XboxController(0);
 
+  // public final Timer timer = 
+
+
   final Constants cons = new Constants();
   final Gear gear = new Gear();
   final Claw claw = new Claw();
+
+  public final Timer timer = new Timer();
+
+
 
   @Override
   public void robotInit() {
@@ -42,6 +54,7 @@ public class Robot extends TimedRobot {
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
     rightMotor.setInverted(true);
+
   }
 
 
@@ -102,4 +115,23 @@ public class Robot extends TimedRobot {
 
 
   }
+
+
+  @Override
+  public void autonomousInit() {
+   
+    timer.reset();
+    timer.start();
+    
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+  
+    if (timer.get() < 2) {
+      robotDrive.arcadeDrive(cons.autoSpeed, 0);
+    }
+
+  }
+
 }
